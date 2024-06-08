@@ -17,8 +17,10 @@ const TaskModel_1 = require("../Models/TaskModel");
 let TaskController = class TaskController {
     async create(body) {
         const data = new TaskModel_1.TaskModel({
-            status: body.status,
-            description: body.description
+            status: body.status || "Open",
+            description: body.description,
+            createdAt: body.createdAt || Date.now(),
+            updatedAt: body.updatedAt || Date.now()
         });
         try {
             await data.save();
@@ -41,7 +43,7 @@ let TaskController = class TaskController {
     }
     async update(body) {
         try {
-            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(body.id, { status: body.status, description: body.description });
+            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(body.id, { status: body.status == "Open" ? "Closed" : "Open", description: body.description, updatedAt: Date.now() });
             return { result: result };
         }
         catch (error) {
@@ -50,9 +52,9 @@ let TaskController = class TaskController {
             };
         }
     }
-    async delete(body) {
+    async delete(id) {
         try {
-            const data = await TaskModel_1.TaskModel.findByIdAndDelete(body.id);
+            const data = await TaskModel_1.TaskModel.findByIdAndDelete(id);
             return { data: data };
         }
         catch (error) {
@@ -84,9 +86,8 @@ __decorate([
 ], TaskController.prototype, "update", null);
 __decorate([
     (0, tsoa_1.Delete)("/delete/:id"),
-    __param(0, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "delete", null);
 TaskController = __decorate([

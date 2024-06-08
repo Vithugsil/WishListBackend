@@ -274,6 +274,14 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"updatedAt": {
+										"type": "string",
+										"format": "date-time"
+									},
+									"createdAt": {
+										"type": "string",
+										"format": "date-time"
+									},
 									"description": {
 										"type": "string"
 									},
@@ -282,6 +290,8 @@
 									}
 								},
 								"required": [
+									"updatedAt",
+									"createdAt",
 									"description",
 									"status"
 								],
@@ -334,6 +344,10 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"updatedAt": {
+										"type": "string",
+										"format": "date-time"
+									},
 									"description": {
 										"type": "string"
 									},
@@ -345,6 +359,7 @@
 									}
 								},
 								"required": [
+									"updatedAt",
 									"description",
 									"status",
 									"id"
@@ -372,25 +387,16 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"id": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"id"
-								],
-								"type": "object"
-							}
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
-				}
+				]
 			}
 		}
 	},

@@ -7,12 +7,14 @@ export default class TaskController {
 
     @Post("/create")
     public async create(
-        @Body() body: { status: string, description: string }
+        @Body() body: { status: string , description: string, createdAt: Date, updatedAt: Date}
     ): Promise<string> {
 
         const data = new TaskModel({
-            status: body.status,
-            description: body.description
+            status: body.status || "Open",
+            description: body.description,
+            createdAt: body.createdAt || Date.now(),
+            updatedAt: body.updatedAt || Date.now()
         })
         try {
             await data.save()
@@ -36,10 +38,9 @@ export default class TaskController {
 
 
     @Patch("/update")
-    public async update(@Body() body: { id: string; status: string, description: string }): Promise<JsonObject> {
+    public async update(@Body() body: { id: string; status: string, description: string , updatedAt: Date}): Promise<JsonObject> {
         try {
-            const result = await TaskModel.findByIdAndUpdate(body.id, { status: body.status, description: body.description })
-
+            const result = await TaskModel.findByIdAndUpdate(body.id, { status: body.status == "Open" ? "Closed" : "Open", description: body.description, updatedAt: Date.now()})
             return { result: result }
         } catch (error: any) {
             return {
@@ -49,9 +50,9 @@ export default class TaskController {
     }
 
     @Delete("/delete/:id")
-    public async delete(@Body() body: { id : string}): Promise<JsonObject> {
+    public async delete(id: string): Promise<JsonObject> {
         try {
-            const data = await TaskModel.findByIdAndDelete(body.id)
+            const data = await TaskModel.findByIdAndDelete(id)
             return { data: data }
         } catch (error: any) {
             return {

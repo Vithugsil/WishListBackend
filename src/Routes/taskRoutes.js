@@ -20,7 +20,7 @@ router.patch("/update", async (req, res) => {
     return res.status(response.error ? 400 : 200).send(response);
 });
 router.delete("/delete/:id", async (req, res) => {
-    const response = await controller.delete(req.body);
+    const response = await controller.delete(req.params.id);
     return res.status(response.error ? 400 : 200).send(response);
 });
 exports.default = router;
