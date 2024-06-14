@@ -7,11 +7,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Boolean": {
-				"properties": {},
-				"type": "object",
-				"additionalProperties": false
-			},
 			"JsonObject": {
 				"properties": {},
 				"type": "object",
@@ -67,7 +62,7 @@
 										"type": "string"
 									},
 									"status": {
-										"$ref": "#/components/schemas/Boolean"
+										"type": "boolean"
 									}
 								},
 								"required": [
@@ -102,8 +97,8 @@
 				"parameters": []
 			}
 		},
-		"/api/task/update": {
-			"patch": {
+		"/api/task/update/{id}": {
+			"put": {
 				"operationId": "Update",
 				"responses": {
 					"200": {
@@ -118,32 +113,32 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
 								"properties": {
-									"updatedAt": {
-										"type": "string",
-										"format": "date-time"
-									},
 									"description": {
 										"type": "string"
 									},
 									"status": {
-										"$ref": "#/components/schemas/Boolean"
-									},
-									"id": {
-										"type": "string"
+										"type": "boolean"
 									}
 								},
 								"required": [
-									"updatedAt",
 									"description",
-									"status",
-									"id"
+									"status"
 								],
 								"type": "object"
 							}

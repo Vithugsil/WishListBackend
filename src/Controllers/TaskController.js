@@ -41,9 +41,9 @@ let TaskController = class TaskController {
             };
         }
     }
-    async update(body) {
+    async update(id, body) {
         try {
-            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(body.id, { status: body.status == false ? false : true, description: body.description, updatedAt: Date.now() });
+            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(id, { status: body.status == false ? true : false, description: body.description, updatedAt: Date.now() });
             return { result: result };
         }
         catch (error) {
@@ -78,10 +78,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "all", null);
 __decorate([
-    (0, tsoa_1.Patch)("/update"),
-    __param(0, (0, tsoa_1.Body)()),
+    (0, tsoa_1.Put)("/update/:id"),
+    __param(1, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "update", null);
 __decorate([

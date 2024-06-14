@@ -1,4 +1,4 @@
-import { Body, Get, Patch, Delete, Post, Route } from "tsoa";
+import { Body, Get, Patch, Delete, Post, Route, Put } from "tsoa";
 import { TaskModel } from "../Models/TaskModel";
 import { JsonObject } from "swagger-ui-express";
 
@@ -36,11 +36,10 @@ export default class TaskController {
         }
     }
 
-
-    @Patch("/update")
-    public async update(@Body() body: { id: string; status: boolean, description: string , updatedAt: Date}): Promise<JsonObject> {
+    @Put("/update/:id")
+    public async update(id: string, @Body() body: {status: boolean, description: string}): Promise<JsonObject> {
         try {
-            const result = await TaskModel.findByIdAndUpdate(body.id, { status: body.status == false ? true : true, description: body.description, updatedAt: Date.now()})
+            const result = await TaskModel.findByIdAndUpdate(id, { status: body.status == false ? true : false, description: body.description, updatedAt: Date.now()})
             return { result: result }
         } catch (error: any) {
             return {

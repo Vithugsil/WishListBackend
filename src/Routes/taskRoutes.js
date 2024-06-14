@@ -15,8 +15,8 @@ router.get("/getAll", async (req, res) => {
     const response = await controller.all();
     return res.status(response.error ? 400 : 200).send(response);
 });
-router.patch("/update", async (req, res) => {
-    const response = await controller.update(req.body);
+router.put("/update/:id", async (req, res) => {
+    const response = await controller.update(req.params.id, req.body);
     return res.status(response.error ? 400 : 200).send(response);
 });
 router.delete("/delete/:id", async (req, res) => {
