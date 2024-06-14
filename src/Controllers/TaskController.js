@@ -17,7 +17,7 @@ const TaskModel_1 = require("../Models/TaskModel");
 let TaskController = class TaskController {
     async create(body) {
         const data = new TaskModel_1.TaskModel({
-            status: body.status || "Open",
+            status: body.status || true,
             description: body.description,
             createdAt: body.createdAt || Date.now(),
             updatedAt: body.updatedAt || Date.now()
@@ -43,7 +43,7 @@ let TaskController = class TaskController {
     }
     async update(body) {
         try {
-            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(body.id, { status: body.status == "Open" ? "Closed" : "Open", description: body.description, updatedAt: Date.now() });
+            const result = await TaskModel_1.TaskModel.findByIdAndUpdate(body.id, { status: body.status == false ? false : true, description: body.description, updatedAt: Date.now() });
             return { result: result };
         }
         catch (error) {

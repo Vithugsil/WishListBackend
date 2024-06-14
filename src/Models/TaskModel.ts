@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
     status: {
-        type: String,
+        type: Boolean,
         required: false,   
     },
     description: {

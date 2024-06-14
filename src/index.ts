@@ -2,8 +2,7 @@ import express, { Express, Request, Response } from "express"
 import dotenv from "dotenv"
 import cors from "cors";
 
-import icecreamRoutes from "./Routes/icecreamRoutes"
-import drinkRoutes from "./Routes/drinkRoutes"
+
 import taskRoutes from "./Routes/taskRoutes"
 
 import swaggerUi from "swagger-ui-express"
@@ -25,18 +24,8 @@ const corsOptions = {
 app.use(cors(corsOptions)) 
 app.use(express.json())
 app.use(express.static("public"))
-// app.use(
-//   "/swagger", // endereço de onde o swagger responde
-//   swaggerUi.serve,
-//   swaggerUi.setup(undefined, {
-//     swaggerOptions: {
-//       url: "/swagger.json",
-//     },
-//   })
-// )
 
-app.use("/api/icecream", icecreamRoutes)
-app.use("/api/drink", drinkRoutes)
+
 app.use("/api/task", taskRoutes)
 
 app.get("/", (req: Request, res: Response) => {

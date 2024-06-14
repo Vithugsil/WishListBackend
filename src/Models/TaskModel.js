@@ -7,7 +7,7 @@ exports.TaskModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const taskSchema = new mongoose_1.default.Schema({
     status: {
-        type: String,
+        type: Boolean,
         required: false,
     },
     description: {
