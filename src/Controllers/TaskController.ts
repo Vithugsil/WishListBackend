@@ -7,7 +7,7 @@ export default class TaskController {
 
     @Post("/create")
     public async create(
-        @Body() body: { status: Boolean , description: string, createdAt: Date, updatedAt: Date}
+        @Body() body: { status: boolean , description: string, createdAt: Date, updatedAt: Date}
     ): Promise<string> {
 
         const data = new TaskModel({
@@ -38,9 +38,9 @@ export default class TaskController {
 
 
     @Patch("/update")
-    public async update(@Body() body: { id: string; status: Boolean, description: string , updatedAt: Date}): Promise<JsonObject> {
+    public async update(@Body() body: { id: string; status: boolean, description: string , updatedAt: Date}): Promise<JsonObject> {
         try {
-            const result = await TaskModel.findByIdAndUpdate(body.id, { status: body.status == false ? false : true, description: body.description, updatedAt: Date.now()})
+            const result = await TaskModel.findByIdAndUpdate(body.id, { status: body.status == false ? true : true, description: body.description, updatedAt: Date.now()})
             return { result: result }
         } catch (error: any) {
             return {
