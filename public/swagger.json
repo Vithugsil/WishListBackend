@@ -64,7 +64,7 @@
 									"status": {
 										"type": "boolean"
 									},
-									"id": {
+									"_id": {
 										"type": "string"
 									}
 								},
@@ -73,7 +73,7 @@
 									"createdAt",
 									"description",
 									"status",
-									"id"
+									"_id"
 								],
 								"type": "object"
 							}

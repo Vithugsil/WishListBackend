@@ -10,6 +10,7 @@ const controller = new TaskController_1.default();
 router.post("/create", async (req, res) => {
     const response = await controller.create(req.body);
     return res.status(response === "OK" ? 200 : 400).send(response);
+    // return res.status(response.error ? 400 : 200).send(response)
 });
 router.get("/getAll", async (req, res) => {
     const response = await controller.all();

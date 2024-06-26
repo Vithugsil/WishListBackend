@@ -1,24 +1,34 @@
 import { Body, Get, Patch, Delete, Post, Route, Put } from "tsoa";
 import { TaskModel } from "../Models/TaskModel";
 import { JsonObject } from "swagger-ui-express";
+import { randomUUID } from "crypto";
 
 @Route("api/task")
 export default class TaskController {
 
     @Post("/create")
     public async create(
-        @Body() body: { id: string, status: boolean , description: string, createdAt: Date, updatedAt: Date}
-    ): Promise<JsonObject> {
+        @Body() body: { _id: string, status: boolean, description: string, createdAt: Date, updatedAt: Date }
+    ): Promise<string> {
+
+        const uuid = randomUUID();
+        console.log(`Generated UUID: ${uuid}`);  // Log para depuraçã
 
         const data = new TaskModel({
-            id: body.id,
+            _id: uuid,
             status: body.status || true,
             description: body.description,
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: body.createdAt || Date.now(),
+            updatedAt: body.updatedAt || Date.now()
         })
-        return data;
+        try {
+            await data.save()
+            return "OK"
+        } catch (error) {
+            return JSON.stringify(error);
+        }
     }
+
 
     @Get("/getAll")
     public async all(): Promise<JsonObject> {
@@ -33,9 +43,9 @@ export default class TaskController {
     }
 
     @Put("/update/:id")
-    public async update(id: string, @Body() body: {status: boolean, description: string}): Promise<JsonObject> {
+    public async update(id: string, @Body() body: { status: boolean, description: string }): Promise<JsonObject> {
         try {
-            const result = await TaskModel.findByIdAndUpdate(id, { status: body.status == false ? true : false, description: body.description, updatedAt: Date.now()})
+            const result = await TaskModel.findByIdAndUpdate(id, { status: body.status == false ? true : false, description: body.description, updatedAt: Date.now() })
             return { result: result }
         } catch (error: any) {
             return {
