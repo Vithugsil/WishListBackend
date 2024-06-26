@@ -7,21 +7,17 @@ export default class TaskController {
 
     @Post("/create")
     public async create(
-        @Body() body: { status: boolean , description: string, createdAt: Date, updatedAt: Date}
-    ): Promise<string> {
+        @Body() body: { id: string, status: boolean , description: string, createdAt: Date, updatedAt: Date}
+    ): Promise<JsonObject> {
 
         const data = new TaskModel({
+            id: body.id,
             status: body.status || true,
             description: body.description,
-            createdAt: body.createdAt || Date.now(),
-            updatedAt: body.updatedAt || Date.now()
+            createdAt: Date.now(),
+            updatedAt: Date.now()
         })
-        try {
-            await data.save()
-            return "OK"
-        } catch (error) {
-            return JSON.stringify(error);
-        }
+        return data;
     }
 
     @Get("/getAll")

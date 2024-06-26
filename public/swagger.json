@@ -63,13 +63,17 @@
 									},
 									"status": {
 										"type": "boolean"
+									},
+									"id": {
+										"type": "string"
 									}
 								},
 								"required": [
 									"updatedAt",
 									"createdAt",
 									"description",
-									"status"
+									"status",
+									"id"
 								],
 								"type": "object"
 							}

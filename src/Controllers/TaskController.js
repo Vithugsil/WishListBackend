@@ -17,18 +17,13 @@ const TaskModel_1 = require("../Models/TaskModel");
 let TaskController = class TaskController {
     async create(body) {
         const data = new TaskModel_1.TaskModel({
+            id: body.id,
             status: body.status || true,
             description: body.description,
-            createdAt: body.createdAt || Date.now(),
-            updatedAt: body.updatedAt || Date.now()
+            createdAt: Date.now(),
+            updatedAt: Date.now()
         });
-        try {
-            await data.save();
-            return "OK";
-        }
-        catch (error) {
-            return JSON.stringify(error);
-        }
+        return data;
     }
     async all() {
         try {

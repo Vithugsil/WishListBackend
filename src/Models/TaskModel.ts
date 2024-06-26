@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 
 
 const taskSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true
+    },
     status: {
         type: Boolean,
         required: false,   
