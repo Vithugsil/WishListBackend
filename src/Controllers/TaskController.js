@@ -14,21 +14,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const tsoa_1 = require("tsoa");
 const TaskModel_1 = require("../Models/TaskModel");
-const crypto_1 = require("crypto");
 let TaskController = class TaskController {
     async create(body) {
-        const uuid = (0, crypto_1.randomUUID)();
-        console.log(`Generated UUID: ${uuid}`); // Log para depuraçã
         const data = new TaskModel_1.TaskModel({
-            _id: uuid,
-            status: body.status || true,
+            _id: body._id,
+            status: body.status || false,
             description: body.description,
             createdAt: body.createdAt || Date.now(),
             updatedAt: body.updatedAt || Date.now()
         });
         try {
             await data.save();
-            return "OK";
+            return JSON.stringify({ message: "ok" });
         }
         catch (error) {
             return JSON.stringify(error);

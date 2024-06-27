@@ -11,19 +11,17 @@ export default class TaskController {
         @Body() body: { _id: string, status: boolean, description: string, createdAt: Date, updatedAt: Date }
     ): Promise<string> {
 
-        const uuid = randomUUID();
-        console.log(`Generated UUID: ${uuid}`);  // Log para depuraçã
 
         const data = new TaskModel({
-            _id: uuid,
-            status: body.status || true,
+            _id: body._id,
+            status: body.status || false,
             description: body.description,
             createdAt: body.createdAt || Date.now(),
             updatedAt: body.updatedAt || Date.now()
         })
         try {
             await data.save()
-            return "OK"
+            return JSON.stringify({ message: "ok" });
         } catch (error) {
             return JSON.stringify(error);
         }
